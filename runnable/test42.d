@@ -1674,6 +1674,11 @@ void test101()
 /***************************************************/
 
 version(X86)
+    version = Test103;
+else version(ARM)
+    version = Test103;
+
+version(Test103)
 {
 int x103;
 
@@ -2417,10 +2422,19 @@ bool foo150()
 /***************************************************/
 // 3521
 
+// guessing this test doesn't make sense on ARM, but let it run
+// anyway without the int 3 call
+version (D_InlineAsm_X86)
+    version = TestInlineAsm;
+else version (D_InlineAsm_X86_64)
+    version = TestInlineAsm;
+
+
 void crash(int x)
 {
   if (x==200) return;
-   asm { int 3; }
+  version (TestInlineAsm)
+     asm { int 3; }
 }
 
 void test151()
@@ -4168,7 +4182,12 @@ void oddity4001()
 
 /***************************************************/
 
-int bug3809() { asm { nop; } return 0; }
+// Don't understand this test, but let if compile
+// on non x86 anyway
+
+version (TestInlineAsm)
+    int bug3809() { asm { nop; } return 0; }
+
 struct BUG3809 { int xx; }
 void bug3809b() {
 }
