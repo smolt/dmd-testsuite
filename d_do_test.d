@@ -381,7 +381,9 @@ bool collectExtraSources (in string input_dir, in string output_dir, in string[]
             }
             else
             {
-                command ~= " -m"~envData.model~" -c "~curSrc~" -o "~curObj;
+	        // no -m option on arm-linux
+                command ~= " -c "~curSrc~" -o "~curObj;
+		//command ~= " -m"~envData.model~" -c "~curSrc~" -o "~curObj;
             }
         }
         else
