@@ -328,7 +328,16 @@ version(LDC)
     }
 }
 
-version(LDC_SystemV)
+version(ARM)
+{
+    // TODO: only need this until arm-abi has correct builtin va_list type
+    // for _argptr
+    static if (is(__va_list))
+        alias __va_list cpp_va_list;
+    else
+        alias va_list cpp_va_list;
+}
+else version(LDC_SystemV)
     alias __va_list_tag* cpp_va_list;
 else
     alias va_list cpp_va_list;
