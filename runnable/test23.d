@@ -355,12 +355,17 @@ void test16()
 
 /*******************************************/
 
+version (D_InlineAsm_X86)
+    version = TestInlineAsm;
+else version (D_InlineAsm_X86_64)
+    version = TestInlineAsm;
+
 void test17()
 {
     version (OSX)
     {
     }
-    else
+    else version (TestInlineAsm)
     {
         const f = 1.2f;
 	float g = void;
