@@ -204,10 +204,28 @@ void safeexception()
     }));
 }
 
-@safe
-void inlineasm()
+version (D_InlineAsm_X86)
+    version = TestInlineAsm;
+else version (D_InlineAsm_X86_64)
+    version = TestInlineAsm;
+
+version (TestInlineAsm)
 {
-    static assert(!__traits(compiles, { asm { int 3; } }() ));
+    @safe
+    void inlineasm()
+    {
+      static assert(!__traits(compiles, { asm { int 3; } }() ));
+    }
+}
+
+version (LDC)
+{
+    @safe
+    void llvm_inlineasm()
+    {
+        import ldc.llvmasm;
+        static assert(!__traits(compiles, { __asm("", "", ""); }() ));
+    }
 }
 
 @safe
