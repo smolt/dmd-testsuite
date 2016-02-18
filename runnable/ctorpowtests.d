@@ -1,11 +1,29 @@
 // PERMUTE_ARGS:
 
+version (D_InlineAsm_X86)
+    version = TestInlineAsm;
+else version (D_InlineAsm_X86_64)
+    version = TestInlineAsm;
+else
+{
+   version = LDC_InlineAsm;
+   import ldc.llvmasm;
+}
+
+
 int magicVariable()
 {
   if (__ctfe) 
    return 3;
-  
-  asm { nop; }
+
+  // not sure why inline asm needed, to disallow ctfe?
+  version (TestInlineAsm)
+      asm { nop; }
+  else version (LDC_InlineAsm)
+      __asm("", "");
+  else
+    static assert(0, "Unsupported platform");
+
   return 2;
 }
 
@@ -112,10 +130,16 @@ struct StructWithCtor
     float x;
 }
 
+// Not sure what is being tested here
 int containsAsm() {
+   version (TestInlineAsm)
        asm { nop; }
-       return 0;
-    }
+   else version (LDC_InlineAsm)
+       __asm("", "");
+   else
+       static assert(0, "Unsupported inline asm");
+    return 0;
+}
 
 enum A = StructWithCtor(1);  
 enum B = StructWithCtor(7, 2.3);
