@@ -242,9 +242,7 @@ ifeq ($(OS),linux)
     DISABLED_COMPILE_TESTS += deprecate12979a # dmd inline asm
     DISABLED_COMPILE_TESTS += ldc_github_791  # dmd inline asm
     DISABLED_COMPILE_TESTS += test11471	      # dmd inline asm
-    # this should have error message about inline asm, but is missing
-    # keep enabled as a reminder
-    #DISABLED_COMPILE_TESTS += test12979b      # dmd inline asm
+    DISABLED_COMPILE_TESTS += test12979b      # dmd inline asm
     DISABLED_FAIL_TESTS += deprecate12979a    # dmd inline asm
     DISABLED_FAIL_TESTS += deprecate12979b    # dmd inline asm
     DISABLED_FAIL_TESTS += deprecate12979c    # dmd inline asm
