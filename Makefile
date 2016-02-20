@@ -257,10 +257,6 @@ ifeq ($(OS),linux)
     DISABLED_FAIL_TESTS += fail80_m64	      # no -m64
     DISABLED_FAIL_TESTS += ldc_diag8425	      # no -m64
     DISABLED_TESTS += test36		      # dmd inline asm/Windows
-
-    # only because the release version dies in compile and takes a long time
-    # to compile, but debug version passes
-    DISABLED_TESTS += mars1
   endif
 endif
 
